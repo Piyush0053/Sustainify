@@ -12,7 +12,7 @@ export const analyzeImageWithGemini = async (imageFile) => {
     // Get the API key from environment variables
     const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
     
-    if (!apiKey || apiKey === 'AIzaSyCrycowPbBTlTSSgN5L9KxQgSqfOARSXTY') {
+    if (!apiKey || apiKey === '##') {
       throw new Error('Please set your Gemini API key in the .env file');
     }
 
