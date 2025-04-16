@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c067c213.css",
+    "main.js": "/static/js/main.fd96221f.js",
+    "static/js/453.80e6c1bf.chunk.js": "/static/js/453.80e6c1bf.chunk.js",
+    "static/media/img1.png": "/static/media/img1.82edf5638969e8603a8c.png",
+    "static/media/machli.jpg": "/static/media/machli.20288adbaa873d45c1f7.jpg",
+    "static/media/3.png": "/static/media/3.742802e05132152576cf.png",
+    "static/media/2.png": "/static/media/2.d74c42c0a0df834b45d0.png",
+    "static/media/1.png": "/static/media/1.3058ef21af26c317bac9.png",
+    "static/media/logo.png": "/static/media/logo.988f97fcd70f85207d8e.png",
+    "index.html": "/index.html",
+    "main.c067c213.css.map": "/static/css/main.c067c213.css.map",
+    "main.fd96221f.js.map": "/static/js/main.fd96221f.js.map",
+    "453.80e6c1bf.chunk.js.map": "/static/js/453.80e6c1bf.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c067c213.css",
+    "static/js/main.fd96221f.js"
+  ]
+}

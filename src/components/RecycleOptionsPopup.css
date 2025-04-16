@@ -1,0 +1,185 @@
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.popup-container {
+  background-color: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 700px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  animation: popup-appear 0.3s ease-out;
+}
+
+@keyframes popup-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.close-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #333;
+}
+
+.popup-header {
+  padding: 25px 30px 0;
+  text-align: center;
+}
+
+.popup-header h2 {
+  margin: 0;
+  color: #2e7d32;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.popup-content {
+  padding: 20px 30px 30px;
+}
+
+.popup-content p {
+  text-align: center;
+  color: #555;
+  margin-bottom: 25px;
+  font-size: 1.1rem;
+}
+
+.options-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.option-card {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 25px;
+  width: 250px;
+  text-align: center;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.option-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.option-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.option-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.sell-icon {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4CAF50;
+}
+
+.recycle-icon {
+  background-color: rgba(33, 150, 243, 0.1);
+  color: #2196F3;
+}
+
+.option-card h3 {
+  margin: 0 0 10px;
+  color: #333;
+  font-size: 1.3rem;
+}
+
+.option-card p {
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+
+.option-button {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1rem;
+}
+
+.sell-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.sell-button:hover {
+  background-color: #3d8b40;
+}
+
+.recycle-button {
+  background-color: #2196F3;
+  color: white;
+}
+
+.recycle-button:hover {
+  background-color: #0d8aee;
+}
+
+@media (max-width: 650px) {
+  .options-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .option-card {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .popup-header h2 {
+    font-size: 1.5rem;
+  }
+}
