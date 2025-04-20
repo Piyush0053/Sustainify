@@ -1,7 +1,7 @@
  
 # Sustainify - React Implementation
 
-This project is a React.js implementation of the Sustainify website, which focuses on recycling and sustainability. The application allows users to sell their recyclable items, check exchange rates, and learn about sustainable practices through blog posts.
+ Sustainify , which focuses on recycling and sustainability. The application allows users to sell their recyclable items, check exchange rates, and learn about sustainable practices through blog posts.
 
 ## Project Structure
 
