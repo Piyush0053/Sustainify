@@ -1,0 +1,160 @@
+/* RoutePage.css - Common styling for all route pages */
+
+.route-page {
+  min-height: 100vh;
+  padding-top: 5rem; /* Space for the navbar */
+}
+
+.route-page-container {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--container-padding);
+}
+
+.route-page-header {
+  margin-bottom: var(--space-2xl);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: var(--space-xl);
+}
+
+.route-page-header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #065f46; /* emerald-800 */
+  margin-bottom: var(--space-md);
+}
+
+.route-page-header p {
+  font-size: 1.125rem;
+  color: #4b5563; /* gray-600 */
+  max-width: 800px;
+}
+
+.route-page-content {
+  margin-bottom: var(--section-spacing);
+}
+
+.route-section {
+  margin-bottom: var(--section-spacing);
+  background-color: white;
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-xl);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.route-section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #065f46; /* emerald-800 */
+  margin-bottom: var(--space-lg);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.2); /* emerald-500 at 20% opacity */
+  padding-bottom: var(--space-md);
+}
+
+/* Form styling for any route pages with forms */
+.form-group {
+  margin-bottom: var(--space-xl);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--space-sm);
+  font-weight: 500;
+  color: #1f2937; /* gray-800 */
+}
+
+.form-control {
+  width: 100%;
+  padding: var(--space-md);
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #10b981; /* emerald-500 */
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); /* emerald-500 at 20% opacity */
+}
+
+/* Table styling for data display pages */
+.table-container {
+  overflow-x: auto;
+  margin-bottom: var(--space-xl);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-md);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  padding: var(--space-md);
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb; /* gray-200 */
+}
+
+.data-table th {
+  background-color: #f9fafb; /* gray-50 */
+  font-weight: 600;
+  color: #4b5563; /* gray-600 */
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f3f4f6; /* gray-100 */
+}
+
+/* Card grid for any page that displays cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--space-xl);
+  margin-bottom: var(--section-spacing);
+}
+
+@media (min-width: 640px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .route-page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .route-section {
+    padding: var(--space-lg);
+  }
+}
+
+@media (max-width: 640px) {
+  .route-page-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .route-page-container {
+    padding: var(--space-md);
+  }
+  
+  .route-section {
+    padding: var(--space-md);
+  }
+} 

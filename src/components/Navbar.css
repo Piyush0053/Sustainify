@@ -1,51 +1,249 @@
 .navbar {
-  width: 97%;
-  margin: auto;
-  padding: 20px 0;
+  width: 100%;
+  padding: 16px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: static;
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* Special case for homepage where navbar should be transparent */
+.home-navbar {
+  background-color: transparent;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  border-bottom: none;
+  box-shadow: none;
 }
 
 .logo {
-  width: 120px;
+  width: 140px;
   cursor: pointer;
 }
 
-.navbar ul {
+.navbar-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
   display: flex;
-  list-style: none;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.navbar ul li {
+.navbar-links {
+  display: flex;
   list-style: none;
-  display: inline-block;
-  margin: 0 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  margin: 0 16px;
   position: relative;
 }
 
-.navbar ul li a {
+.navbar-links a {
   text-decoration: none;
-  color: #fff;
-  text-transform: uppercase;
+  color: #1f2937;
+  font-weight: 500;
+  font-size: 16px;
+  transition: color 0.2s ease;
+  padding: 8px 0;
+  display: inline-block;
 }
 
-.navbar ul li::after {
+.home-navbar .navbar-links a {
+  color: #ffffff;
+}
+
+.navbar-links a:hover {
+  color: #1890ff;
+}
+
+.home-navbar .navbar-links a:hover {
+  color: #40a9ff;
+}
+
+.active-link {
+  position: relative;
+  color: #1890ff !important;
+}
+
+.active-link::after {
   content: '';
-  height: 3px;
-  width: 0;
-  background: #404040;
   position: absolute;
+  bottom: 0;
   left: 0;
-  bottom: -5px;
-  transition: 0.5s;
+  width: 100%;
+  height: 2px;
+  background-color: #1890ff;
+  transition: width 0.3s ease;
 }
 
-.navbar ul li:hover::after {
-  width: 100%;
+.home-navbar .active-link {
+  color: #ffffff !important;
+}
+
+.home-navbar .active-link::after {
+  background-color: #ffffff;
+}
+
+/* Contact info in navbar */
+.navbar-contact {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.navbar-contact-item {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.home-navbar .navbar-contact-item {
+  color: #ffffff;
+}
+
+.navbar-contact-icon {
+  margin-right: 6px;
+  color: #1890ff;
+}
+
+.home-navbar .navbar-contact-icon {
+  color: #40a9ff;
+}
+
+/* Call to action button in navbar */
+.navbar-cta {
+  background-color: #1890ff;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.navbar-cta:hover {
+  background-color: #096dd9;
+  color: white;
+}
+
+/* Mobile menu button */
+.mobile-menu-button {
+  display: none;
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+
+/* Mobile navigation */
+.mobile-nav {
+  display: none;
+  padding: 16px;
+}
+
+.mobile-nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-nav-links li {
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 12px;
+}
+
+.mobile-nav-links li:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.mobile-nav-links a {
+  display: block;
+  padding: 8px 16px;
+  color: #1f2937;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.home-navbar .mobile-nav-links a {
+  color: #ffffff;
+}
+
+.mobile-nav-links a:hover {
+  color: #1890ff;
+}
+
+.home-navbar .mobile-nav-links a:hover {
+  color: #40a9ff;
+}
+
+.mobile-nav-links .active-link {
+  font-weight: 600;
+  color: #1890ff !important;
+}
+
+.home-navbar .mobile-nav-links .active-link {
+  color: #ffffff !important;
+  text-decoration: underline;
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 992px) {
+  .navbar-contact {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .navbar-links {
+    display: none;
+  }
+  
+  .mobile-menu-button {
+    display: block;
+  }
+  
+  .mobile-nav {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.3s ease;
+  }
+  
+  .home-navbar .mobile-nav {
+    background-color: rgba(24, 144, 255, 0.95);
+  }
+  
+  @keyframes slideDown {
+    from {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 }

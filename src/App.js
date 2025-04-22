@@ -14,19 +14,24 @@ import RecycleAnalysis from './components/RecycleAnalysis';
 // Wrapper component to conditionally render Navbar
 const AppContent = () => {
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  
+  // List of paths where Navbar should appear
+  const navbarPaths = ['/', '/recycle', '/rates', '/blog'];
+  const showNavbar = navbarPaths.includes(location.pathname);
   
   return (
     <div className="App">
-      {isHomePage && <Navbar />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/recycle" element={<RecycleNow />} />
-        <Route path="/rates" element={<ExchangeRates />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/thanks" element={<Thanks />} />
-        <Route path="/recycle-analysis" element={<RecycleAnalysis />} />
-      </Routes>
+      {showNavbar && <Navbar />}
+      <div className={showNavbar ? (location.pathname === '/' ? '' : 'pt-16') : ''}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/recycle" element={<RecycleNow />} />
+          <Route path="/rates" element={<ExchangeRates />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/thanks" element={<Thanks />} />
+          <Route path="/recycle-analysis" element={<RecycleAnalysis />} />
+        </Routes>
+      </div>
     </div>
   );
 };

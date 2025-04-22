@@ -1,21 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.c067c213.css",
-    "main.js": "/static/js/main.fd96221f.js",
-    "static/js/453.80e6c1bf.chunk.js": "/static/js/453.80e6c1bf.chunk.js",
-    "static/media/img1.png": "/static/media/img1.82edf5638969e8603a8c.png",
-    "static/media/machli.jpg": "/static/media/machli.20288adbaa873d45c1f7.jpg",
-    "static/media/3.png": "/static/media/3.742802e05132152576cf.png",
-    "static/media/2.png": "/static/media/2.d74c42c0a0df834b45d0.png",
-    "static/media/1.png": "/static/media/1.3058ef21af26c317bac9.png",
-    "static/media/logo.png": "/static/media/logo.988f97fcd70f85207d8e.png",
+    "main.css": "/static/css/main.d9d0e837.chunk.css",
+    "main.js": "/static/js/main.bbe0b2f3.chunk.js",
+    "main.js.map": "/static/js/main.bbe0b2f3.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.4a9a7a8f.js",
+    "runtime~main.js.map": "/static/js/runtime~main.4a9a7a8f.js.map",
+    "static/js/2.bc78c49a.chunk.js": "/static/js/2.bc78c49a.chunk.js",
+    "static/js/2.bc78c49a.chunk.js.map": "/static/js/2.bc78c49a.chunk.js.map",
+    "static/js/3.c60c86f6.chunk.js": "/static/js/3.c60c86f6.chunk.js",
+    "static/js/3.c60c86f6.chunk.js.map": "/static/js/3.c60c86f6.chunk.js.map",
     "index.html": "/index.html",
-    "main.c067c213.css.map": "/static/css/main.c067c213.css.map",
-    "main.fd96221f.js.map": "/static/js/main.fd96221f.js.map",
-    "453.80e6c1bf.chunk.js.map": "/static/js/453.80e6c1bf.chunk.js.map"
-  },
-  "entrypoints": [
-    "static/css/main.c067c213.css",
-    "static/js/main.fd96221f.js"
-  ]
+    "precache-manifest.06dde3aa4cf86084ab1ce7dd96ef81c6.js": "/precache-manifest.06dde3aa4cf86084ab1ce7dd96ef81c6.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.d9d0e837.chunk.css.map": "/static/css/main.d9d0e837.chunk.css.map",
+    "static/media/1.png": "/static/media/1.ebedab57.png",
+    "static/media/2.png": "/static/media/2.ef6842a5.png",
+    "static/media/3.png": "/static/media/3.72465a28.png",
+    "static/media/logo.png": "/static/media/logo.057bff39.png",
+    "static/media/App.css": "/static/media/machli.4a110809.jpg"
+  }
 }

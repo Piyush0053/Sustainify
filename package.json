@@ -14,15 +14,15 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-router-dom": "^6.22.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^3.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "build": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "nodemon server.js",
+    "server": "set NODE_OPTIONS=--openssl-legacy-provider && nodemon server/server.js",
     "dev": "concurrently \"npm run server\" \"npm run start\""
   },
   "eslintConfig": {
@@ -45,9 +45,6 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.4",
-    "autoprefixer": "^10.4.21",
-    "concurrently": "^8.2.2",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^4.1.4"
+    "concurrently": "^8.2.2"
   }
 }
