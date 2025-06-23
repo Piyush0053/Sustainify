@@ -1,146 +1,114 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import './Navbar.css';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Sell Scrap', path: '/recycle' },
+    { name: 'Rates', path: '/rates' },
+    { name: 'Blog', path: '/blog' },
+    { name: 'About', path: '/#about' },
+  ];
 
   return (
-    <nav className={`navbar ${isHomePage ? 'home-navbar' : ''}`}>
-      <div className="navbar-container">
-        <Link to="/" className="logo-container">
-          <img src={require('../assets/images/logo.png')} alt="Sustainify Logo" className="logo" />
-        </Link>
-        
-        <div className="flex items-center">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled ? 'glass-effect shadow-lg' : 'bg-transparent'
+    }`}>
+      <div className="container">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg">S</span>
+            </div>
+            <span className="text-xl font-bold gradient-text">Sustainify</span>
+          </Link>
+
           {/* Desktop Navigation */}
-          <ul className="navbar-links">
-            <li>
-              <Link 
-                to="/" 
-                className={location.pathname === '/' ? 'active-link' : ''}
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={`text-sm font-medium transition-colors duration-200 hover:text-indigo-400 ${
+                  location.pathname === item.path
+                    ? 'text-indigo-400'
+                    : 'text-gray-300'
+                }`}
               >
-                Home
+                {item.name}
               </Link>
-            </li>
-            <li>
-              <Link 
-                to="/recycle" 
-                className={location.pathname === '/recycle' ? 'active-link' : ''}
-              >
-                Sell Scrap
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/rates" 
-                className={location.pathname === '/rates' ? 'active-link' : ''}
-              >
-                Scrap Rates
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/blog" 
-                className={location.pathname === '/blog' ? 'active-link' : ''}
-              >
-                Blog
-              </Link>
-            </li>
-            <li>
-              <a href={isHomePage ? '#about' : '/#about'}>
-                About Us
-              </a>
-            </li>
-            <li>
-              <Link 
-                to="/recycle" 
-                className="navbar-cta"
-              >
-                Book Pickup
-              </Link>
-            </li>
-          </ul>
-          
+            ))}
+          </div>
+
+          {/* CTA Button */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Link to="/recycle" className="btn btn-primary">
+              Book Pickup
+            </Link>
+          </div>
+
           {/* Mobile menu button */}
-          <button 
-            className="mobile-menu-button"
+          <button
+            className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
           >
-            <svg className="w-6 h-6" fill="none" stroke={isHomePage ? "white" : "#1f2937"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              {isMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
+            <div className="w-6 h-6 flex flex-col justify-center items-center">
+              <span className={`bg-white block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm ${
+                isMenuOpen ? 'rotate-45 translate-y-1' : '-translate-y-0.5'
+              }`}></span>
+              <span className={`bg-white block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm my-0.5 ${
+                isMenuOpen ? 'opacity-0' : 'opacity-100'
+              }`}></span>
+              <span className={`bg-white block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm ${
+                isMenuOpen ? '-rotate-45 -translate-y-1' : 'translate-y-0.5'
+              }`}></span>
+            </div>
           </button>
         </div>
-      </div>
-      
-      {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="mobile-nav">
-          <ul className="mobile-nav-links">
-            <li>
-              <Link 
-                to="/" 
-                className={location.pathname === '/' ? 'active-link' : ''}
+
+        {/* Mobile Navigation */}
+        <div className={`md:hidden transition-all duration-300 ease-in-out ${
+          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        } overflow-hidden`}>
+          <div className="py-4 space-y-4">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={`block text-sm font-medium transition-colors duration-200 hover:text-indigo-400 ${
+                  location.pathname === item.path
+                    ? 'text-indigo-400'
+                    : 'text-gray-300'
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
-                Home
+                {item.name}
               </Link>
-            </li>
-            <li>
-              <Link 
-                to="/recycle" 
-                className={location.pathname === '/recycle' ? 'active-link' : ''}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Sell Scrap
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/rates" 
-                className={location.pathname === '/rates' ? 'active-link' : ''}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Scrap Rates
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/blog" 
-                className={location.pathname === '/blog' ? 'active-link' : ''}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Blog
-              </Link>
-            </li>
-            <li>
-              <a 
-                href={isHomePage ? '#about' : '/#about'} 
-                onClick={() => setIsMenuOpen(false)}
-              >
-                About Us
-              </a>
-            </li>
-            <li>
-              <Link 
-                to="/recycle" 
-                className="navbar-cta block text-center"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Book Pickup
-              </Link>
-            </li>
-          </ul>
+            ))}
+            <Link
+              to="/recycle"
+              className="btn btn-primary w-full mt-4"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Book Pickup
+            </Link>
+          </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 };

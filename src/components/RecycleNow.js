@@ -1,42 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './RecycleNow.css';
-import './RoutePage.css';
-import RecycleOptionsPopup from './RecycleOptionsPopup';
-
-// Recyclable rates data from rates.html
-const recyclableRates = {
-  generalItems: [
-    { name: 'Paper', rate: 16 },
-    { name: 'Cardboard', rate: 7 },
-    { name: 'Plastic', rate: 10 },
-    { name: 'Iron', rate: 27 },
-    { name: 'Glass', rate: 'TBA' },
-    { name: 'Aluminium', rate: 105 },
-    { name: 'Steel', rate: 37 },
-    { name: 'Copper', rate: 425 }
-  ],
-  medicalWaste: [
-    { name: 'Blister packs', rate: 'TBA' },
-    { name: 'Plastic bottle', rate: 10 },
-    { name: 'Glass Bottle', rate: 'TBA' },
-    { name: 'Hospital Equipments', rate: 'TBA' }
-  ],
-  appliances: [
-    { name: 'Air Conditioner', rate: 4000 },
-    { name: 'Washing Machine', rate: 600 },
-    { name: 'Geyser', rate: 50 },
-    { name: 'Refrigerator', rate: 1000 },
-    { name: 'Cooler', rate: 20 },
-    { name: 'Television', rate: 150 },
-    { name: 'Microwave', rate: 200 },
-    { name: 'Other Electronics', rate: 'Negotiable' }
-  ],
-  automobile: [
-    { name: 'Car', rate: 2000 },
-    { name: 'Bike', rate: 2100 }
-  ]
-};
 
 const RecycleNow = () => {
   const navigate = useNavigate();
@@ -53,9 +16,6 @@ const RecycleNow = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState(null);
-  const [showRates, setShowRates] = useState(false);
-  const [selectedRateCategory, setSelectedRateCategory] = useState('generalItems');
-  const [showPopup, setShowPopup] = useState(false);
   const [showRecyclingOptions, setShowRecyclingOptions] = useState(false);
 
   // Check if weight is less than 10kg to show recycling options
@@ -68,14 +28,6 @@ const RecycleNow = () => {
     }
   }, [formData.weight]);
 
-  const openPopup = () => {
-    setShowPopup(true);
-  };
-
-  const closePopup = () => {
-    setShowPopup(false);
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -85,8 +37,6 @@ const RecycleNow = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitMessage(null);
-
-    console.log('Form submission started');
 
     // Client-side validation for required fields
     const requiredFields = ['name', 'contact', 'date', 'time', 'address', 'pincode'];
@@ -102,9 +52,6 @@ const RecycleNow = () => {
     }
 
     try {
-      // Log form data to console but don't send to server
-      console.log('Form data:', formData);
-      
       // Show success message
       setSubmitMessage({
         type: 'success',
@@ -124,13 +71,10 @@ const RecycleNow = () => {
       });
       
       // Wait a moment before redirecting to thanks page
-      console.log('Redirecting to Thanks page in 1.5 seconds...');
       setTimeout(() => {
-        console.log('Navigating to /thanks');
         navigate('/thanks');
       }, 1500);
     } catch (error) {
-      console.error('Error processing form:', error);
       setSubmitMessage({
         type: 'error',
         text: error instanceof Error ? error.message : 'Failed to process. Please try again.'
@@ -140,114 +84,104 @@ const RecycleNow = () => {
     }
   };
 
-  // Calculate price details
-  const getBaseRate = () => {
-    // Default rate if no specific rate is found
-    return 50;
-  };
+  const materialTypes = [
+    { value: 'General Items', icon: '📄', description: 'Paper, plastic, metal items' },
+    { value: 'Electronics', icon: '📱', description: 'Phones, computers, appliances' },
+    { value: 'Medical Items', icon: '💊', description: 'Medical waste and equipment' },
+    { value: 'Automobiles', icon: '🚗', description: 'Car parts and vehicles' }
+  ];
 
-  const basePrice = parseFloat(formData.weight) * getBaseRate() || 0;
-  const deliveryCharge = 0;
-  const packagingFee = 0;
-  const total = basePrice + deliveryCharge + packagingFee;
-
-  // Toggle rates display
-  const toggleRates = () => {
-    setShowRates(!showRates);
-  };
-
-  // Handle rate category change
-  const handleRateCategoryChange = (category) => {
-    setSelectedRateCategory(category);
-  };
+  const basePrice = parseFloat(formData.weight) * 50 || 0;
+  const total = basePrice;
 
   return (
-    <div className="route-page bg-gray-50">
-      <div className="route-page-container">
-        <div className="route-page-header">
-          <h1>Recycle Now</h1>
-          <p>Schedule a pickup for your recyclable items and get paid for them.</p>
-        </div>
-        
-        <div className="route-page-content">
-          <div className="grid-container grid-container-2">
-            <div className="route-section">
-              <h2 className="route-section-title">Pickup Request Form</h2>
-              
-              {showRecyclingOptions && (
-                <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200 mb-6">
-                  <p className="text-emerald-800">Your item weighs less than 10kg! Did you know you could recycle it at home?</p>
-                  <button 
-                    onClick={openPopup} 
-                    className="btn btn-primary mt-2 bg-emerald-600 hover:bg-emerald-700"
-                  >
-                    Explore Recycling Options
-                  </button>
-                </div>
-              )}
-              
-              <form onSubmit={handleSubmit} className="recycle-form">
-                <div className="form-grid">
-                  <div className="form-group">
-                    <label htmlFor="name">
-                      <span className="icon name-icon"></span>Enter Name:
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      className="form-control"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
+    <div className="min-h-screen pt-20">
+      <div className="container py-12">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              Schedule Your <span className="gradient-text">Pickup</span>
+            </h1>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Fill out the form below to schedule a convenient pickup time for your recyclable materials. 
+              Get instant quotes and earn money while helping the environment.
+            </p>
+          </div>
 
-                  <div className="form-group">
-                    <label htmlFor="contact">
-                      <span className="icon phone-icon"></span>Enter Contact No:
-                    </label>
-                    <input
-                      type="tel"
-                      name="contact"
-                      id="contact"
-                      className="form-control"
-                      value={formData.contact}
-                      onChange={handleChange}
-                      pattern="[0-9]{10}"
-                      required
-                    />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Form Section */}
+            <div className="lg:col-span-2">
+              <div className="card">
+                <h2 className="text-2xl font-bold mb-6 text-white">Pickup Details</h2>
+                
+                {showRecyclingOptions && (
+                  <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-lg p-4 mb-6">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-2xl">💡</span>
+                      <div>
+                        <p className="text-green-400 font-medium">Lightweight Item Detected!</p>
+                        <p className="text-gray-300 text-sm">Your item weighs less than 10kg. Consider recycling it at home for maximum environmental impact.</p>
+                      </div>
+                    </div>
+                    <button className="btn btn-outline mt-3 text-sm">
+                      Explore Home Recycling Options
+                    </button>
                   </div>
+                )}
 
-                  <div className="form-group">
-                    <label htmlFor="date">
-                      <span className="icon date-icon"></span>Enter Date:
-                    </label>
-                    <div className="input-with-icon">
-                      <span className="input-icon date-icon"></span>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Personal Information */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="form-group">
+                      <label className="form-label">Full Name</label>
                       <input
-                        type="date"
-                        name="date"
-                        id="date"
-                        className="form-control"
-                        value={formData.date}
+                        type="text"
+                        name="name"
+                        className="form-input"
+                        value={formData.name}
                         onChange={handleChange}
+                        placeholder="Enter your full name"
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label className="form-label">Contact Number</label>
+                      <input
+                        type="tel"
+                        name="contact"
+                        className="form-input"
+                        value={formData.contact}
+                        onChange={handleChange}
+                        placeholder="Enter your phone number"
+                        pattern="[0-9]{10}"
                         required
                       />
                     </div>
                   </div>
 
-                  <div className="form-group">
-                    <label htmlFor="time">
-                      <span className="icon time-icon"></span>Enter Time:
-                    </label>
-                    <div className="input-with-icon">
-                      <span className="input-icon time-icon"></span>
+                  {/* Date and Time */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="form-group">
+                      <label className="form-label">Pickup Date</label>
+                      <input
+                        type="date"
+                        name="date"
+                        className="form-input"
+                        value={formData.date}
+                        onChange={handleChange}
+                        min={new Date().toISOString().split('T')[0]}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label className="form-label">Preferred Time</label>
                       <input
                         type="time"
                         name="time"
-                        id="time"
-                        className="form-control"
+                        className="form-input"
                         value={formData.time}
                         onChange={handleChange}
                         required
@@ -255,177 +189,182 @@ const RecycleNow = () => {
                     </div>
                   </div>
 
-                  <div className="form-group full-width">
-                    <label htmlFor="address">
-                      <span className="icon address-icon"></span>Enter Address:
-                    </label>
-                    <div className="input-with-icon">
-                      <span className="input-icon address-icon"></span>
-                      <textarea
-                        name="address"
-                        id="address"
-                        className="form-control"
-                        value={formData.address}
-                        onChange={handleChange}
-                        rows={3}
-                        required
-                      />
-                    </div>
-                  </div>
-
+                  {/* Address */}
                   <div className="form-group">
-                    <label htmlFor="pincode">
-                      <span className="icon pincode-icon"></span>Enter Pincode:
-                    </label>
-                    <input
-                      type="text"
-                      name="pincode"
-                      id="pincode"
-                      className="form-control"
-                      value={formData.pincode}
+                    <label className="form-label">Pickup Address</label>
+                    <textarea
+                      name="address"
+                      className="form-input"
+                      value={formData.address}
                       onChange={handleChange}
-                      pattern="[0-9]{6}"
+                      placeholder="Enter your complete address"
+                      rows={3}
                       required
                     />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="materialType">
-                      <span className="icon material-icon"></span>Type of Material:
-                    </label>
-                    <div className="input-with-icon">
-                      <span className="input-icon material-icon"></span>
-                      <select
-                        name="materialType"
-                        id="materialType"
-                        className="form-control"
-                        value={formData.materialType}
-                        onChange={handleChange}
-                      >
-                        <option value="General Items">General Items</option>
-                        <option value="Medical Items">Medical Items</option>
-                        <option value="Appliances">Appliances</option>
-                        <option value="Automobiles">Automobiles</option>
-                      </select>
-                    </div>
+                    <label className="form-label">Pincode</label>
+                    <input
+                      type="text"
+                      name="pincode"
+                      className="form-input"
+                      value={formData.pincode}
+                      onChange={handleChange}
+                      placeholder="Enter your area pincode"
+                      pattern="[0-9]{6}"
+                      required
+                    />
                   </div>
 
+                  {/* Material Type */}
                   <div className="form-group">
-                    <label htmlFor="weight">
-                      <span className="icon weight-icon"></span>Estimated Weight (in Kg):
-                    </label>
-                    <div className="input-with-icon">
-                      <span className="input-icon weight-icon"></span>
-                      <input
-                        type="number"
-                        name="weight"
-                        id="weight"
-                        className="form-control"
-                        value={formData.weight}
-                        onChange={handleChange}
-                        min="0"
-                        step="0.1"
-                        required
-                      />
+                    <label className="form-label">Material Type</label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {materialTypes.map((type) => (
+                        <label key={type.value} className="cursor-pointer">
+                          <input
+                            type="radio"
+                            name="materialType"
+                            value={type.value}
+                            checked={formData.materialType === type.value}
+                            onChange={handleChange}
+                            className="sr-only"
+                          />
+                          <div className={`p-4 rounded-lg border-2 transition-all ${
+                            formData.materialType === type.value
+                              ? 'border-indigo-500 bg-indigo-500/10'
+                              : 'border-gray-600 hover:border-gray-500'
+                          }`}>
+                            <div className="flex items-center space-x-3">
+                              <span className="text-2xl">{type.icon}</span>
+                              <div>
+                                <div className="font-medium text-white">{type.value}</div>
+                                <div className="text-sm text-gray-400">{type.description}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Weight */}
+                  <div className="form-group">
+                    <label className="form-label">Estimated Weight (kg)</label>
+                    <input
+                      type="number"
+                      name="weight"
+                      className="form-input"
+                      value={formData.weight}
+                      onChange={handleChange}
+                      placeholder="Enter estimated weight"
+                      min="0"
+                      step="0.1"
+                      required
+                    />
+                  </div>
+
+                  {/* Submit Message */}
+                  {submitMessage && (
+                    <div className={`p-4 rounded-lg ${
+                      submitMessage.type === 'success'
+                        ? 'bg-green-500/10 border border-green-500/20 text-green-400'
+                        : 'bg-red-500/10 border border-red-500/20 text-red-400'
+                    }`}>
+                      {submitMessage.text}
+                    </div>
+                  )}
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    className="btn btn-primary w-full text-lg py-4"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <div className="flex items-center justify-center space-x-2">
+                        <div className="spinner"></div>
+                        <span>Submitting...</span>
+                      </div>
+                    ) : (
+                      'Schedule Pickup'
+                    )}
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            {/* Sidebar */}
+            <div className="space-y-6">
+              {/* Price Calculator */}
+              <div className="card">
+                <h3 className="text-xl font-bold mb-4 text-white">Price Estimate</h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Base Rate (₹50/kg)</span>
+                    <span className="text-white">₹{basePrice.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Pickup Charge</span>
+                    <span className="text-green-400">Free</span>
+                  </div>
+                  <div className="border-t border-gray-700 pt-3">
+                    <div className="flex justify-between text-lg font-bold">
+                      <span className="text-white">Total Estimate</span>
+                      <span className="gradient-text">₹{total.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
-                
-                {submitMessage && (
-                  <div className={`message-box ${submitMessage.type}`}>
-                    {submitMessage.text}
-                  </div>
-                )}
+                <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                  <p className="text-blue-400 text-sm">
+                    💡 Final price may vary based on actual weight and material quality
+                  </p>
+                </div>
+              </div>
 
-                <button 
-                  type="submit" 
-                  className="btn btn-primary bg-emerald-600 hover:bg-emerald-700" 
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Submitting...' : 'Submit Request'}
-                </button>
-              </form>
-            </div>
-            
-            <div className="route-section">
-              <h2 className="route-section-title">Recycling Rates</h2>
-              <p className="mb-4">Check the current rates for different types of recyclable materials.</p>
-              
-              <div className="rate-categories bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200">
-                <button 
-                  className={`btn ${selectedRateCategory === 'generalItems' ? 'btn-primary bg-emerald-600' : 'bg-gray-200 text-gray-700'} mr-2 mb-2`}
-                  onClick={() => handleRateCategoryChange('generalItems')}
-                >
-                  General Items
-                </button>
-                <button 
-                  className={`btn ${selectedRateCategory === 'medicalWaste' ? 'btn-primary bg-emerald-600' : 'bg-gray-200 text-gray-700'} mr-2 mb-2`}
-                  onClick={() => handleRateCategoryChange('medicalWaste')}
-                >
-                  Medical Waste
-                </button>
-                <button 
-                  className={`btn ${selectedRateCategory === 'appliances' ? 'btn-primary bg-emerald-600' : 'bg-gray-200 text-gray-700'} mr-2 mb-2`}
-                  onClick={() => handleRateCategoryChange('appliances')}
-                >
-                  Appliances
-                </button>
-                <button 
-                  className={`btn ${selectedRateCategory === 'automobile' ? 'btn-primary bg-emerald-600' : 'bg-gray-200 text-gray-700'} mr-2 mb-2`}
-                  onClick={() => handleRateCategoryChange('automobile')}
-                >
-                  Automobile
-                </button>
-              </div>
-              
-              <div className="table-container">
-                <table className="data-table">
-                  <thead>
-                    <tr>
-                      <th>Item</th>
-                      <th>Rate (₹/kg)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {recyclableRates[selectedRateCategory].map((item, index) => (
-                      <tr key={index}>
-                        <td>{item.name}</td>
-                        <td>{item.rate}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              
-              <div className="price-calculator card mt-6">
-                <h3 className="text-lg font-semibold text-emerald-700 mb-3">Price Calculator</h3>
-                <div className="price-details">
-                  <div className="price-row">
-                    <span>Base Price:</span>
-                    <span>₹{basePrice.toFixed(2)}</span>
+              {/* Benefits */}
+              <div className="card">
+                <h3 className="text-xl font-bold mb-4 text-white">Why Choose Us?</h3>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <span className="text-green-400 mt-1">✓</span>
+                    <div>
+                      <div className="text-white font-medium">Best Market Rates</div>
+                      <div className="text-gray-400 text-sm">Competitive pricing for all materials</div>
+                    </div>
                   </div>
-                  <div className="price-row">
-                    <span>Pickup Charge:</span>
-                    <span>₹{deliveryCharge.toFixed(2)}</span>
+                  <div className="flex items-start space-x-3">
+                    <span className="text-green-400 mt-1">✓</span>
+                    <div>
+                      <div className="text-white font-medium">Instant Payment</div>
+                      <div className="text-gray-400 text-sm">Get paid immediately after pickup</div>
+                    </div>
                   </div>
-                  <div className="price-row">
-                    <span>Handling Fee:</span>
-                    <span>₹{packagingFee.toFixed(2)}</span>
-                  </div>
-                  <div className="price-row total">
-                    <span>Total:</span>
-                    <span>₹{total.toFixed(2)}</span>
+                  <div className="flex items-start space-x-3">
+                    <span className="text-green-400 mt-1">✓</span>
+                    <div>
+                      <div className="text-white font-medium">Eco-Friendly</div>
+                      <div className="text-gray-400 text-sm">100% responsible recycling</div>
+                    </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Contact Support */}
+              <div className="card bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border-indigo-500/20">
+                <h3 className="text-xl font-bold mb-4 text-white">Need Help?</h3>
+                <p className="text-gray-300 mb-4">
+                  Our support team is here to assist you with any questions about the pickup process.
+                </p>
+                <button className="btn btn-outline w-full">
+                  Contact Support
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
-      {showPopup && (
-        <RecycleOptionsPopup onClose={closePopup} />
-      )}
     </div>
   );
 };
